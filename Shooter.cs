@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Shoter : MonoBehaviour
+public class Shooter : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private float _timeWaitShooting;
@@ -25,19 +25,15 @@ public class Shoter : MonoBehaviour
 
     private IEnumerator ShootingWorker()
     {
-        bool isWork = enabled;
-
-        while (true)
+        while (enabled)
         {
             var direction = (_prefabBullet.transform.position - transform.position).normalized;
-            Bullet newBullet = Instantiate(_prefabBullet, transform.position + direction, Quaternion.identity);
+            Bullet bullet = Instantiate(_prefabBullet, transform.position + direction, Quaternion.identity);
 
-            newBullet.transform.up = direction;
-            newBullet.Init(direction * _speed);
+            bullet.transform.up = direction;
+            bullet.Init(direction, _speed);
 
             yield return _sleep;
-
-            isWork = enabled;
         }
     }
 }

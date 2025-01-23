@@ -10,8 +10,8 @@ public class Bullet : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    public void Init(Vector3 speed)
+    public void Init(Vector3 diretion, float speed)
     {
-        _rigidbody.velocity = speed;
+        _rigidbody.velocity = diretion * speed;
     }
 }
