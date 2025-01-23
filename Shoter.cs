@@ -2,12 +2,11 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class InstantiateBulletsShooting : MonoBehaviour
+public class Shoter : MonoBehaviour
 {
-    [SerializeField] private float _multiplier;
-    [SerializeField] private Transform _objectToShoot;
+    [SerializeField] private float _speed;
     [SerializeField] private float _timeWaitShooting;
-    [SerializeField] private Rigidbody _prefabBullet;
+    [SerializeField] private Bullet _prefabBullet;
 
     private Coroutine _coroutineShooting;
     private WaitForSeconds _sleep;
@@ -30,11 +29,11 @@ public class InstantiateBulletsShooting : MonoBehaviour
 
         while (true)
         {
-            var vector3direction = (_objectToShoot.position - transform.position).normalized;
-            Rigidbody newBullet = Instantiate(_prefabBullet, transform.position + vector3direction, Quaternion.identity);
+            var direction = (_prefabBullet.transform.position - transform.position).normalized;
+            Bullet newBullet = Instantiate(_prefabBullet, transform.position + direction, Quaternion.identity);
 
-            newBullet.transform.up = vector3direction;
-            newBullet.velocity = vector3direction * _multiplier;
+            newBullet.transform.up = direction;
+            newBullet.Init(direction * _speed);
 
             yield return _sleep;
 
